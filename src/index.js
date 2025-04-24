@@ -1,13 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import ProtectedApp from "./ProtectedApp";
+import "./index.css";
+import App from "./App";
+import { Auth0Provider } from '@auth0/auth0-react';
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { BrowserRouter } from "react-router-dom";
+import { ContextProvider } from "./Context";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Auth0Provider
+      domain="dev-avispqusww8yi5aw.us.auth0.com"
+      clientId="6CnUJYxMpgoSioc8sJcGxwM0o3Ho9m6h"
+      authorizationParams={{
+        redirect_uri: window.location.origin
+      }}
+    >
+      <BrowserRouter>
+        <ContextProvider>
+          <ProtectedApp/>
+        </ContextProvider>
+      </BrowserRouter>
+    </Auth0Provider>
   </React.StrictMode>
 );
 
