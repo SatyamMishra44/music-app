@@ -80,11 +80,18 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
                   </div>
                 )}
                 <button
-                  className="btn btn-outline-light btn-sm"
-                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
-                >
-                  Log Out
-                </button>
+                    className="btn btn-outline-light btn-sm"
+                      onClick={() =>
+                      logout({
+                      logoutParams: {
+                      returnTo: 'https://dev-avispqusww8yi5aw.us.auth0.com/login',
+                },
+            })
+          }
+        >
+  Log Out
+</button>
+
               </div>
             ) : (
               <button
