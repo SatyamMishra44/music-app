@@ -149,7 +149,7 @@ function App() {
           <div className="col-12 py-5 text-center">
             <h1>
               <i className="bi bi-music-note-list mx-3"></i>
-              Sangeet-App
+              Spotify_Clone
             </h1>
             <h3 className="py-5">This app is created by Pradeep Gupta</h3>
             <div>
