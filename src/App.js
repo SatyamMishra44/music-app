@@ -151,7 +151,7 @@ function App() {
               <i className="bi bi-music-note-list mx-3"></i>
               Sangeet-App
             </h1>
-            <h3 className="py-5">Discover music in 30 seconds</h3>
+            <h3 className="py-5">This app is created by Pradeep Gupta</h3>
             <div>
               {/* <a
                 target="_blank"
