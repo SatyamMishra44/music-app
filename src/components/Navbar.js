@@ -5,8 +5,6 @@ import { MusicContext } from "../Context";
 import PinnedMusic from "./PinnedMusic";
 import LikedMusic from "./LikedMusic";
 
-// ...imports remain the same
-
 const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
   const musicContext = useContext(MusicContext);
   const likedMusic = musicContext.likedMusic;
@@ -14,42 +12,43 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
   const setResultOffset = musicContext.setResultOffset;
   const { user, loginWithRedirect, isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
-
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-gradient shadow sticky-top" style={{ background: "linear-gradient(to right, #1f1f1f, #2c2c2c)" }}>
+      <nav className="navbar navbar-dark navbar-expand-lg bg-dark sticky-top">
         <div className="container-fluid">
-          <Link className="navbar-brand text-info fw-bold" to="/">
-            <i className="bi bi-music-note-beamed mx-2"></i>Spotify_Clone
+          <Link className="navbar-brand" to="/">
+            <i className="bi bi-music-note-list mx-3"></i> Sangeet-App
           </Link>
-
-          <div className="d-flex align-items-center">
+          <div>
             <button
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              className="btn btn-outline-warning btn-sm mx-1"
+              className="btn btn-secondary btn-sm mx-1"
             >
-              <i className="bi bi-pin-angle"></i> {pinnedMusic.length}
+              <i className="bi bi-pin-angle-fill"></i> {pinnedMusic.length}
             </button>
             <button
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#likedMusicModal"
-              className="btn btn-outline-danger btn-sm mx-1"
+              className="btn btn-secondary btn-sm mx-1"
             >
-              <i className="bi bi-heart"></i> {likedMusic.length}
+              <i className="bi bi-heart-fill"></i> {likedMusic.length}
             </button>
           </div>
 
-          <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <div
+            className="collapse navbar-collapse d-flex justify-content-center"
+            id="navbarSupportedContent"
+          >
             <input
               value={keyword}
               onChange={(event) => setKeyword(event.target.value)}
               onKeyDown={handleKeyPress}
-              className="form-control me-2 w-75 rounded-pill shadow-sm border-0 px-4"
+              className="form-control me-2 w-75"
               type="search"
-              placeholder="Search for music..."
+              placeholder="Search"
               aria-label="Search"
             />
             <button
@@ -57,55 +56,58 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
                 setResultOffset(0);
                 fetchMusicData();
               }}
-              className="btn btn-info text-white rounded-pill px-4"
+              className="btn btn-outline-success"
             >
               Search
             </button>
-
             {isAuthenticated ? (
-              <div className="d-flex align-items-center mx-3">
+              <div className="d-flex align-items-center mx-2">
                 {user?.picture ? (
                   <img
                     src={user.picture}
                     alt={user.name}
-                    className="rounded-circle border border-2 border-success shadow-sm"
-                    style={{ width: "40px", height: "40px", objectFit: "cover", marginRight: "10px" }}
+                    className="rounded-circle"
+                    style={{ width: "35px", height: "35px", objectFit: "cover", marginRight: "10px" }}
                   />
                 ) : (
                   <div
-                    className="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center shadow-sm"
-                    style={{ width: "40px", height: "40px", marginRight: "10px", fontSize: "1.1rem" }}
+                    className="rounded-circle bg-success text-white d-flex justify-content-center align-items-center"
+                    style={{ width: "35px", height: "35px", marginRight: "10px" }}
                   >
                     {user?.email?.charAt(0)?.toUpperCase() || "U"}
                   </div>
                 )}
                 <button
-                    className="btn btn-outline-light btn-sm"
-                      onClick={() =>
-                      logout({
-                      logoutParams: {
-                      returnTo: 'https://dev-avispqusww8yi5aw.us.auth0.com/login',
-                },
-            })
-          }
-        >
-  Log Out
-</button>
-
+                  className="btn btn-outline-success btn-sm"
+                  onClick={() =>
+                    logout({ logoutParams: { returnTo: window.location.origin } })
+                  }
+                >
+                  Log Out
+                </button>
               </div>
             ) : (
               <button
-                className="btn btn-outline-light m-2"
+                className="btn btn-outline-success m-2"
                 onClick={() => loginWithRedirect()}
               >
                 Log In
               </button>
             )}
+
+
+
+            {/* {isAuthenticated ? (
+              <button className="btn btn-outline-success m-2" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                Log Out
+              </button>
+            ) : (
+              <button className="btn btn-outline-success m-2" onClick={() => loginWithRedirect()}>Log In</button>
+            )} */}
           </div>
         </div>
       </nav>
 
-      {/* Pinned Music Modal */}
       <div
         className="modal fade modal-xl"
         id="exampleModal"
@@ -113,11 +115,18 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-scrollable">
-          <div className="modal-content bg-dark text-white border-secondary">
-            <div className="modal-header border-bottom border-secondary">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Pinned Music</h1>
-              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" />
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Pinned Music
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
             </div>
             <div className="modal-body">
               <PinnedMusic />
@@ -126,7 +135,6 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
         </div>
       </div>
 
-      {/* Liked Music Modal */}
       <div
         className="modal fade modal-xl"
         id="likedMusicModal"
@@ -134,11 +142,18 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
         aria-labelledby="likedMusicModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-scrollable">
-          <div className="modal-content bg-dark text-white border-danger">
-            <div className="modal-header border-bottom border-danger">
-              <h1 className="modal-title fs-5" id="likedMusicModalLabel">Liked Music</h1>
-              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" />
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="likedMusicModalLabel">
+                Liked Music
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
             </div>
             <div className="modal-body">
               <LikedMusic />
@@ -151,4 +166,3 @@ const Navbar = ({ keyword, handleKeyPress, setKeyword, fetchMusicData }) => {
 };
 
 export default Navbar;
-
